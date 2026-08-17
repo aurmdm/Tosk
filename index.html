@@ -269,6 +269,8 @@ async function fetchWithFallback(url, diag){
   const withReferer = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
   const attempts = [
     {name:"direct",     run:() => fetch(url, {method:"GET"}).then(r=>({ok:r.ok, status:r.status, text:null, p:r.text()}))},
+    {name:"corsfix",    run:() => fetch("https://proxy.corsfix.com/?"+url, {method:"GET"}).then(r=>({ok:r.ok, status:r.status, text:null, p:r.text()}))},
+    {name:"x2u",        run:() => fetch("https://cors.x2u.in/"+url, {method:"GET"}).then(r=>({ok:r.ok, status:r.status, text:null, p:r.text()}))},
     {name:"allorigins", run:() => fetch(withReferer, {method:"GET"}).then(r=>({ok:r.ok, status:r.status, text:null, p:r.text()}))},
     {name:"corsproxy",  run:() => fetch("https://corsproxy.io/?url="+encodeURIComponent(url), {method:"GET"}).then(r=>({ok:r.ok, status:r.status, text:null, p:r.text()}))},
     {name:"codetabs",   run:() => fetch("https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(url), {method:"GET"}).then(r=>({ok:r.ok, status:r.status, text:null, p:r.text()}))},
